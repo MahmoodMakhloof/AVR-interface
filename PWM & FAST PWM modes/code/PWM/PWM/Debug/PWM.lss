@@ -1,0 +1,170 @@
+
+PWM.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000000cc  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  00000120  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  00000120  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000150  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000058  00000000  00000000  0000018c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00000765  00000000  00000000  000001e4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 0000063b  00000000  00000000  00000949  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   000003a6  00000000  00000000  00000f84  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000088  00000000  00000000  0000132c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000398  00000000  00000000  000013b4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    000000ae  00000000  00000000  0000174c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000038  00000000  00000000  000017fa  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   8:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  10:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  14:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  18:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  1c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  20:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  24:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  28:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  2c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  30:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  34:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  38:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  3c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  40:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  44:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  48:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  4c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  50:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+  60:	0e 94 5b 00 	call	0xb6	; 0xb6 <main>
+  64:	0c 94 64 00 	jmp	0xc8	; 0xc8 <_exit>
+
+00000068 <__bad_interrupt>:
+  68:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000006c <ADC_8bit_init>:
+
+#include "ADC_8bit_DRIVER.h"
+
+void ADC_8bit_init()
+{
+	DDRA=0x00; //porta is input
+  6c:	1a ba       	out	0x1a, r1	; 26
+	ADCSRA|=(1<<ADEN); //enable ADC
+  6e:	37 9a       	sbi	0x06, 7	; 6
+	ADCSRA|=(1<<ADPS0)|(1<<ADPS1)|(1<<ADPS2); //division factor =128 (control speed of converting)
+  70:	86 b1       	in	r24, 0x06	; 6
+  72:	87 60       	ori	r24, 0x07	; 7
+  74:	86 b9       	out	0x06, r24	; 6
+	ADMUX|=(1<<ADLAR); //left adjusted 8bit
+  76:	3d 9a       	sbi	0x07, 5	; 7
+  78:	08 95       	ret
+
+0000007a <ADC_8bit_read>:
+}
+
+uint16 ADC_8bit_read (uint8 chanel) //pass ADC terminal like 2 for ADC2
+{
+  7a:	cf 93       	push	r28
+  7c:	df 93       	push	r29
+  7e:	1f 92       	push	r1
+  80:	cd b7       	in	r28, 0x3d	; 61
+  82:	de b7       	in	r29, 0x3e	; 62
+	volatile uint8 Ain;
+	
+	ADMUX|=(chanel & 0b00011111); //select terminal
+  84:	97 b1       	in	r25, 0x07	; 7
+  86:	8f 71       	andi	r24, 0x1F	; 31
+  88:	98 2b       	or	r25, r24
+  8a:	97 b9       	out	0x07, r25	; 7
+	
+	ADCSRA|=(1<<ADSC); //start converting
+  8c:	36 9a       	sbi	0x06, 6	; 6
+	while(!(ADCSRA & (1<<ADIF))); //wait for converting interrupt flag =1
+  8e:	34 9b       	sbis	0x06, 4	; 6
+  90:	fe cf       	rjmp	.-4      	; 0x8e <ADC_8bit_read+0x14>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  92:	85 e3       	ldi	r24, 0x35	; 53
+  94:	8a 95       	dec	r24
+  96:	f1 f7       	brne	.-4      	; 0x94 <ADC_8bit_read+0x1a>
+  98:	00 00       	nop
+	_delay_us(10); // delay for stable
+	//store value of data register in Ain
+	Ain=ADCH;
+  9a:	85 b1       	in	r24, 0x05	; 5
+  9c:	89 83       	std	Y+1, r24	; 0x01
+	return Ain;
+  9e:	89 81       	ldd	r24, Y+1	; 0x01
+	
+}
+  a0:	90 e0       	ldi	r25, 0x00	; 0
+  a2:	0f 90       	pop	r0
+  a4:	df 91       	pop	r29
+  a6:	cf 91       	pop	r28
+  a8:	08 95       	ret
+
+000000aa <PWM_init>:
+	//TCNT0 =zero
+	//OCR0 = zero
+	TCNT0=0x00;
+	OCR0=0x00;
+	//OC0 pin is output
+	SETBIT(DDRB,PB3);
+  aa:	81 e6       	ldi	r24, 0x61	; 97
+  ac:	83 bf       	out	0x33, r24	; 51
+  ae:	12 be       	out	0x32, r1	; 50
+  b0:	1c be       	out	0x3c, r1	; 60
+  b2:	bb 9a       	sbi	0x17, 3	; 23
+  b4:	08 95       	ret
+
+000000b6 <main>:
+}
+int main(void)
+{
+	ADC_8bit_init();
+  b6:	0e 94 36 00 	call	0x6c	; 0x6c <ADC_8bit_init>
+	PWM_init();
+  ba:	0e 94 55 00 	call	0xaa	; 0xaa <PWM_init>
+   
+    while (1) 
+    {
+		OCR0=ADC_8bit_read(0);
+  be:	80 e0       	ldi	r24, 0x00	; 0
+  c0:	0e 94 3d 00 	call	0x7a	; 0x7a <ADC_8bit_read>
+  c4:	8c bf       	out	0x3c, r24	; 60
+  c6:	fb cf       	rjmp	.-10     	; 0xbe <main+0x8>
+
+000000c8 <_exit>:
+  c8:	f8 94       	cli
+
+000000ca <__stop_program>:
+  ca:	ff cf       	rjmp	.-2      	; 0xca <__stop_program>

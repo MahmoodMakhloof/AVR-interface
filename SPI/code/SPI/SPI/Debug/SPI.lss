@@ -1,0 +1,174 @@
+
+SPI.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000000d6  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  0000012a  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  0000012a  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  0000015c  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000050  00000000  00000000  00000198  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00000802  00000000  00000000  000001e8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 00000668  00000000  00000000  000009ea  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   000003a3  00000000  00000000  00001052  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000068  00000000  00000000  000013f8  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    000003f0  00000000  00000000  00001460  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000086  00000000  00000000  00001850  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000030  00000000  00000000  000018d6  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+   8:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+   c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  10:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  14:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  18:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  1c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  20:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  24:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  28:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  2c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  30:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  34:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  38:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  3c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  40:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  44:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  48:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  4c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  50:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_copy_data>:
+  60:	10 e0       	ldi	r17, 0x00	; 0
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	e6 ed       	ldi	r30, 0xD6	; 214
+  68:	f0 e0       	ldi	r31, 0x00	; 0
+  6a:	02 c0       	rjmp	.+4      	; 0x70 <__do_copy_data+0x10>
+  6c:	05 90       	lpm	r0, Z+
+  6e:	0d 92       	st	X+, r0
+  70:	a0 36       	cpi	r26, 0x60	; 96
+  72:	b1 07       	cpc	r27, r17
+  74:	d9 f7       	brne	.-10     	; 0x6c <__do_copy_data+0xc>
+
+00000076 <__do_clear_bss>:
+  76:	20 e0       	ldi	r18, 0x00	; 0
+  78:	a0 e6       	ldi	r26, 0x60	; 96
+  7a:	b0 e0       	ldi	r27, 0x00	; 0
+  7c:	01 c0       	rjmp	.+2      	; 0x80 <.do_clear_bss_start>
+
+0000007e <.do_clear_bss_loop>:
+  7e:	1d 92       	st	X+, r1
+
+00000080 <.do_clear_bss_start>:
+  80:	a0 36       	cpi	r26, 0x60	; 96
+  82:	b2 07       	cpc	r27, r18
+  84:	e1 f7       	brne	.-8      	; 0x7e <.do_clear_bss_loop>
+  86:	0e 94 49 00 	call	0x92	; 0x92 <main>
+  8a:	0c 94 69 00 	jmp	0xd2	; 0xd2 <_exit>
+
+0000008e <__bad_interrupt>:
+  8e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000092 <main>:
+#include "SPI_MASTER_driver.h"
+
+
+int main(void)
+{
+	SPI_MASTER_Init();
+  92:	0e 94 5b 00 	call	0xb6	; 0xb6 <SPI_MASTER_Init>
+	SS_Enable;
+  96:	c4 98       	cbi	0x18, 4	; 24
+	uint8 ctr=0;
+  98:	c0 e0       	ldi	r28, 0x00	; 0
+    while (1) 
+    {
+		SPI_Write(ctr);
+  9a:	8c 2f       	mov	r24, r28
+  9c:	0e 94 64 00 	call	0xc8	; 0xc8 <SPI_Write>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  a0:	2f e7       	ldi	r18, 0x7F	; 127
+  a2:	8a e1       	ldi	r24, 0x1A	; 26
+  a4:	96 e0       	ldi	r25, 0x06	; 6
+  a6:	21 50       	subi	r18, 0x01	; 1
+  a8:	80 40       	sbci	r24, 0x00	; 0
+  aa:	90 40       	sbci	r25, 0x00	; 0
+  ac:	e1 f7       	brne	.-8      	; 0xa6 <main+0x14>
+  ae:	00 c0       	rjmp	.+0      	; 0xb0 <main+0x1e>
+  b0:	00 00       	nop
+		_delay_ms(2000);
+		ctr++;
+  b2:	cf 5f       	subi	r28, 0xFF	; 255
+  b4:	f2 cf       	rjmp	.-28     	; 0x9a <main+0x8>
+
+000000b6 <SPI_MASTER_Init>:
+#include "SPI_MASTER_driver.h"			/* Include SPI Master header file */
+
+
+void SPI_MASTER_Init()								/* SPI Initialize function */
+{
+	DDRB |= (1<<MOSI)|(1<<SCK)|(1<<SS);		/* Make MOSI, SCK, 0th pin direction as output pins */
+  b6:	87 b3       	in	r24, 0x17	; 23
+  b8:	80 6b       	ori	r24, 0xB0	; 176
+  ba:	87 bb       	out	0x17, r24	; 23
+	DDRB &= ~(1<<MISO);						/* Make MISO pin as input pin */
+  bc:	be 98       	cbi	0x17, 6	; 23
+	
+	PORTB |= (1<<SS);						/* Disable slave initially by making high on SS pin */
+  be:	c4 9a       	sbi	0x18, 4	; 24
+	SPCR = (1<<SPE)|(1<<MSTR)|(1<<SPR0);	/* Enable SPI, Enable in master mode, with Fosc/16 SCK frequency */
+  c0:	81 e5       	ldi	r24, 0x51	; 81
+  c2:	8d b9       	out	0x0d, r24	; 13
+	SPSR &= ~(1<<SPI2X);					/* Disable speed doubler */
+  c4:	70 98       	cbi	0x0e, 0	; 14
+  c6:	08 95       	ret
+
+000000c8 <SPI_Write>:
+}
+
+void SPI_Write(char data)					/* SPI write data function */
+{
+	char flush_buffer;
+	SPDR = data;							/* Write data to SPI data register */
+  c8:	8f b9       	out	0x0f, r24	; 15
+	while(!(SPSR & (1<<SPIF)));				/* Wait till transmission complete */
+  ca:	77 9b       	sbis	0x0e, 7	; 14
+  cc:	fe cf       	rjmp	.-4      	; 0xca <SPI_Write+0x2>
+	flush_buffer = SPDR;					/* Flush received data */
+  ce:	8f b1       	in	r24, 0x0f	; 15
+  d0:	08 95       	ret
+
+000000d2 <_exit>:
+  d2:	f8 94       	cli
+
+000000d4 <__stop_program>:
+  d4:	ff cf       	rjmp	.-2      	; 0xd4 <__stop_program>
